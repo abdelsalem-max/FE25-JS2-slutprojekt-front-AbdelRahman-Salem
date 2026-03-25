@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>js2-slutproject-front</title>
+    <script type="module" crossorigin src="/assets/index-DSE0-81w.js"></script>
+  </head>
+  <body>
+    <input id="inputtwo" type="text" />
+    <button onclick="addmember()">Add Member</button>
+    <label>Roll</label>
+    <select id="pickroll">
+      <option value="rocket">Planets</option>
+      <option value="boat">Stars</option>
+      <option value="walker">Moons</option>
+    </select>
+    <button onclick="addAssigment()" id="addwork">Add Assigment</button>
+    <label>Worker</label>
+    <select id="pickworker"></select>
+
+    <select id="pickcatagory">
+      <option value="Planet">Planet</option>
+      <option value="Star">Star</option>
+      <option value="Moon">Moon</option>
+    </select>
+
+    <div id="app"></div>
+    <script>
+      function addAssigment() {
+        let selectedcat = document.getElementById("pickcatagory").value;
+        let selected = document.getElementById("pickworker").value;
+        fetch("http://localhost:3000/assignment", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: "Space",
+            description: "Do this work",
+            category: selectedcat,
+            status: "new",
+            assignedto: selected,
+            timestamp: Date.now(),
+          }),
+        }).then(() => {
+          fetch("http://localhost:3000/assignments")
+            .then((res) => res.json())
+            .then((data) => {
+              worknewlist.innerHTML = "";
+              workdoinglist.innerHTML = "";
+              workdonelist.innerHTML = "";
+              console.log(data);
+              for (const work of data) {
+                console.log(work);
+                console.log(work.title);
+                console.log(work.assignedto);
+                console.log(work.category);
+                console.log(work.description);
+                console.log(work.timestamp);
+                console.log(work.status);
+
+                const title = document.createElement("h2");
+                const assignedto = document.createElement("p");
+                const category = document.createElement("p");
+                const description = document.createElement("p");
+                const timestamp = document.createElement("p");
+                const status = document.createElement("p");
+
+                title.innerText = work.title;
+                assignedto.innerText = work.assignedto;
+                category.innerText = work.category;
+                description.innerText = work.description;
+                timestamp.innerText = work.timestamp;
+                status.innerText = work.status;
+
+                workcontainer.append(
+                  title,
+                  assignedto,
+                  category,
+                  description,
+                  timestamp,
+                  status,
+                );
+
+                if (work.status == "new") {
+                  worknewlist.append(
+                    title,
+                    assignedto,
+                    category,
+                    description,
+                    timestamp,
+                    status,
+                  );
+                } else if (work.status == "doing") {
+                  workdoinglist.append(
+                    title,
+                    assignedto,
+                    category,
+                    description,
+                    timestamp,
+                    status,
+                  );
+                } else if (work.status == "done") {
+                  workdonelist.append(
+                    title,
+                    assignedto,
+                    category,
+                    description,
+                    timestamp,
+                    status,
+                  );
+                }
+              }
+            });
+        }).then(() => {
+    fetch(url + "/members")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+
+        for (const char of data) {
+          if (listwork.includes(char.name)) continue;
+          console.log(char.name);
+          console.log(char.category);
+          const option = document.createElement("option");
+          option.innerHTML = char.name;
+          option.value = char.name;
+          dropdown.append(option);
+          const name = document.createElement("h3");
+          const category = document.createElement("h3");
+
+          name.innerText = char.name;
+          category.innerText = char.category;
+
+          charaboxed.append(name, category);
+        }
+      });
+      });
+    }
+      function addmember() {
+        const name = document.getElementById("inputtwo").value;
+        const rolled = document.getElementById("pickroll").value;
+        fetch("http://localhost:3000/member", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: name,
+            category: rolled,
+          }),
+        }).then(() => {
+          //update hemsidan
+          const charaboxed = document.querySelector("#charaboxed");
+          charaboxed.innerHTML = "";
+          fetch("http://localhost:3000/members")
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              const dropdown = document.getElementById("pickworker");
+              dropdown.innerHTML = "";
+
+              for (const char of data) {
+                console.log(char.name);
+                console.log(char.category);
+                const option = document.createElement("option");
+                option.innerHTML = char.name;
+                option.value = char.name;
+                dropdown.append(option);
+
+                const name = document.createElement("h3");
+                const category = document.createElement("h3");
+
+                name.innerText = char.name;
+                category.innerText = char.category;
+
+                charaboxed.append(name, category);
+                console.log("test");
+              }
+            });
+        });
+      }
+    </script>
+
+    <div id="new"></div>
+    <div id="doing"></div>
+    <div id="done"></div>
+    <div id="workcontainer"></div>
+    <div id="charaboxed"></div>
+
+    <h1>New</h1>
+    <div id="worknewlist"></div>
+    <h1>Doing</h1>
+    <div id="workdoinglist"></div>
+    <h1>Done</h1>
+    <div id="workdonelist"></div>
+  </body>
+</html>

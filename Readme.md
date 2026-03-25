@@ -1,0 +1,11 @@
+Öppna PowerShell
+Inom consolen skrive "cd" sen tryck på "tab" knappen tills du får något som ser ut som det her:
+PS C:\Users\hollo> cd '.\Desktop\Js2 Slutproject front\'
+Klick på enter för att försätta
+Först så skriv i consolen "npm install" för att få in alla liberies inom foldern (Viktigt)
+Efter det så skriv inom consolen "npm run build" för att bygga foldern
+Sen skriv "npm run preview" för att öppna den inom browswern
+Om den inte öppna av sig själv, så koperira den följande inom consolen:
+http://localhost:4173/
+Sen klistra den inom en browser för att få tillgång till projectet.
+Obs: du behöver både front och back delen spm kör på samma gång för att projectet ska fungera.
