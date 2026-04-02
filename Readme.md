@@ -9,5 +9,5 @@
 - Om den inte öppna av sig själv, så koperira den följande inom consolen:
 - http://localhost:4173/
 - Sen klistra den inom en browser för att få tillgång till projectet.
-- Obs: du behöver att refresha sidan när du lägger en ny member.
+- Obs: du behöver att refresha sidan när du lägger en ny member eller när du tar bort en assigment from "done".
 - Obs: du behöver både front och back delen spm kör på samma gång för att projectet ska fungera.
