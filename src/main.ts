@@ -39,6 +39,25 @@ fetch(url + "/assignments")
       const description = document.createElement("p");
       const timestamp = document.createElement("p");
       const status = document.createElement("select");
+      const remove = document.createElement("button");
+      remove.innerHTML = 'Remove'
+      remove.onclick = ()=>{
+                  fetch(url + "/assignment/delete", {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: work.id,
+            }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data, "remove assigment test");
+              updateList();
+            })
+      }
+      remove.disabled = true
 
       const eyeless = document.createElement("option");
       eyeless.innerHTML = "new";
@@ -46,7 +65,18 @@ fetch(url + "/assignments")
       optic.innerHTML = "doing";
       const stalk = document.createElement("option");
       stalk.innerHTML = "done";
-      status.append(optic, stalk, eyeless);
+      if(work.status == "new") {
+        stalk.disabled = true
+      }
+      if (work.status == "doing") {
+        eyeless.disabled = true
+      }
+      if (work.status == "done") {
+        eyeless.disabled = true, 
+        optic.disabled = true
+        remove.disabled = false
+      }
+      status.append(eyeless, optic, stalk);
 
       status.onchange = () => {
         fetch(url + "/assignment/move", {
@@ -107,7 +137,7 @@ fetch(url + "/assignments")
           category,
           description,
           timestamp,
-          status,
+          status, remove
         );
       }
     }
