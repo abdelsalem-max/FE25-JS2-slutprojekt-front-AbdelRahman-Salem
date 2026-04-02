@@ -3,6 +3,7 @@
 - PS C:\Users\hollo> cd '.\Desktop\Js2 Slutproject front\'
 - Klick på enter för att försätta
 - Först så skriv i consolen "npm install" för att få in alla liberies inom foldern (Viktigt)
+- Om en vulnerability kkomer up så bara skirv inom consolen "npm audit fix" och det ska fixa problemet.
 - Efter det så skriv inom consolen "npm run build" för att bygga foldern
 - Sen skriv "npm run preview" för att öppna den inom browswern
 - Om den inte öppna av sig själv, så koperira den följande inom consolen:
